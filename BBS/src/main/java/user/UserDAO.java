@@ -32,10 +32,24 @@ public class UserDAO {
 	public int login(String userID, String userPassword) {
 		// 삽입할 SQL문
 		String SQL = "select userPassword From USER where userID = ? ";
+		// 예외처리를 해줘야함
 		try {
 			//정해진 SQL문을 DB에 삽입
-			
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			rs = pstmt.executeQuery();
+			// 만약 담긴 정보가 있다면 실행!
+			if (rs.next()) {
+				if(rs.getString(1).equals(userPassword))
+					return 1; // 로그인 성공
+				else
+					return 0; // 비밀번호 불일치
+			}
+			return -1; // 아이디가 없음
+		} catch (Exception e ) {  
+			e.printStackTrace();
 		}
+		return -2; // 데이터베이스 오류
 				
 	}
 	

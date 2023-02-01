@@ -18,11 +18,9 @@ public class UserDAO {
 	// try catch로 오류를 처리할 수 있도록 함 
 	public UserDAO() {
 		try {
-			String dbURL = "jdbc:mysql://localhost:3306/BBS";
-			String dbID = "root";
-			String dbPassword ="root";
+			String jdbcURL = "jdbc:mysql://localhost:3306/BBS?serverTimezone=Asia/Seoul";
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
+			conn = DriverManager.getConnection(jdbcURL, "root", "0610");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -31,7 +29,7 @@ public class UserDAO {
 	//실제로 로그인을 시도하는 login 함수를 만듦
 	public int login(String userID, String userPassword) {
 		// 삽입할 SQL문
-		String SQL = "select userPassword From USER where userID = ? ";
+		String SQL = "SELECT userPassword FROM USER WHERE userID = ?";
 		// 예외처리를 해줘야함
 		try {
 			//정해진 SQL문을 DB에 삽입
